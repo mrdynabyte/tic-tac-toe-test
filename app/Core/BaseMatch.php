@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 interface BaseMatch {
     public function create();
     public function terminate();

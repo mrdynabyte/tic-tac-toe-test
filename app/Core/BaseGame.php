@@ -1,4 +1,6 @@
-<?php
+<?php 
+
+namespace App\Core;
 
 interface BaseGame {
     public function rules();
