@@ -29,6 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Core\\": "App/Core/",
             "Tests\\": "tests/"
         }
     },
