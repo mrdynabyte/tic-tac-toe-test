@@ -2,7 +2,8 @@
 
 namespace App\Core;
 
-interface BaseMatch {
+interface BaseMatch
+{
     public function create();
     public function terminate();
     public function getPlayers();
