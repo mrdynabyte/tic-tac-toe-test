@@ -15,10 +15,14 @@ class Player implements BasePlayer
         return $player;
     }
 
-    public function update()
+    public function delete($nickname = '')
     {
+        $player = TTTPlayer::where(['nickname' => $nickname])->first();
+
+        return $player->delete();
     }
-    public function delete()
+
+    public function update()
     {
     }
 }

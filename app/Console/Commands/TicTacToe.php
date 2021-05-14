@@ -67,7 +67,7 @@ class TicTacToe extends Command
             case 1:
                 $this->createPlayer();
             case 2:
-                break;
+                $this->deletePlayer();
             case 3:
                 break;
             case 4:
@@ -85,12 +85,33 @@ class TicTacToe extends Command
     {
         $this->info('Please input the details: ');
 
-        $nickname = $this->ask('Username: ');
-        $email = $this->ask('Email: ');
+        $nickname = $this->ask('Username');
+        $email = $this->ask('Email');
 
-        return $this->players->create([
-            'nickname' => $nickname,
-            'email' => $email,
-        ]);
+        try {
+            $this->players->create([
+                'nickname' => $nickname,
+                'email' => $email,
+            ]);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        $this->showMenu();
+    }
+
+    protected function deletePlayer()
+    {
+        $this->info('Please input the details: ');
+        $nickname = $this->ask('Username');
+
+
+        try {
+            $this->players->delete($nickname);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        $this->showMenu();
     }
 }
