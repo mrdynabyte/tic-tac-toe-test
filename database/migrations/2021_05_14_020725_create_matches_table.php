@@ -15,8 +15,8 @@ class CreateMatchesTable extends Migration
     {
         Schema::create('matches', function (Blueprint $table) {
             $table->id();
-            $table->int('game_id');
-            $table->int('user_id'); //the winner of the match
+            $table->integer('game_id');
+            $table->integer('user_id'); //the winner of the match
             $table->float('score')->nullable();
             $table->timestamps();
         });

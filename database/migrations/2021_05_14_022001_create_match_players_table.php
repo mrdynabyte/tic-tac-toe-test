@@ -15,8 +15,8 @@ class CreateMatchPlayersTable extends Migration
     {
         Schema::create('match_players', function (Blueprint $table) {
             $table->id();
-            $table->int('player_1');
-            $table->int('player_2');
+            $table->integer('player_1');
+            $table->integer('player_2');
         });
     }
 
