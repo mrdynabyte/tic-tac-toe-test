@@ -4,8 +4,8 @@ namespace App\Core;
 
 interface BaseGame
 {
-    public function bootstrap();
     public function init();
-    public function validate();
+    public function bootstrap();
+    public function validate($args);
     public function getAttributes();
 }

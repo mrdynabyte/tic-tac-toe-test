@@ -4,7 +4,7 @@ namespace App\Core;
 
 interface BasePlayer
 {
-    public function create();
-    public function update();
-    public function delete();
+    public function create($playerData);
+    public function update($playerData);
+    public function delete($nickname);
 }

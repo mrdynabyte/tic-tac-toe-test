@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Games\TicTacToe\Match;
 use App\Games\TicTacToe\Player;
 use Illuminate\Console\Command;
+use App\Games\TicTacToe\GameMatch;
 
 class TicTacToe extends Command
 {
@@ -51,8 +51,8 @@ class TicTacToe extends Command
         $choice = $this->choice('Please select an option: ', [
             '1. Create player',
             '2. Delete player',
-            '3. Start match',
-            '4. Check results',
+            '3. New match',
+            '4. Check last match results',
             '5. Exit'
         ], 2);
 
@@ -69,7 +69,7 @@ class TicTacToe extends Command
             case 2:
                 $this->deletePlayer();
             case 3:
-                break;
+                $this->startMatch();
             case 4:
                 break;
             case 5:
@@ -110,6 +110,22 @@ class TicTacToe extends Command
             $this->players->delete($nickname);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
+        }
+
+        $this->showMenu();
+    }
+
+    protected function startMatch()
+    {
+        $playerOne = $this->ask('Who\'s Player 1');
+        $playerTwo = $this->ask('Who\'s Player 2');
+
+        $playerOne = $this->players->findPlayer($playerOne);
+        $playerTwo = $this->players->findPlayer($playerTwo);
+
+        if ($playerOne != null && $playerTwo != null) {
+            $match = new GameMatch();
+            $match->start([$playerTwo, $playerTwo]);
         }
 
         $this->showMenu();

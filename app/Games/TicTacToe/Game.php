@@ -8,10 +8,13 @@ use App\Games\TicTacToe\Player;
 class Game implements BaseGame
 {
     private $board;
-    private Player $playerOne;
-    private Player $playerTwo;
 
     public function __construct()
+    {
+        $this->bootstrap();
+    }
+
+    public function init()
     {
     }
 
@@ -23,11 +26,7 @@ class Game implements BaseGame
         $this->board[2] =  array_fill(0, 3, 0);
     }
 
-    public function init()
-    {
-    }
-
-    public function validate()
+    public function validate($args = [])
     {
     }
 

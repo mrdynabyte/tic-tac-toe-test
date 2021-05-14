@@ -4,7 +4,7 @@ namespace App\Core;
 
 interface BaseMatch
 {
-    public function create();
+    public function start($players);
     public function terminate();
     public function getPlayers();
     public function getWinner();
