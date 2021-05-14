@@ -29,6 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Games\\": "App/Games/",
             "Core\\": "App/Core/",
             "Tests\\": "tests/"
         }

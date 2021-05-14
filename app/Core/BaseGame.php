@@ -4,7 +4,8 @@ namespace App\Core;
 
 interface BaseGame
 {
-    public function rules();
-    public function validateRules();
+    public function bootstrap();
+    public function init();
+    public function validate();
     public function getAttributes();
 }
