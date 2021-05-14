@@ -2,6 +2,7 @@
 
 namespace App\Games\TicTacToe;
 
+use App\Models\Player;
 use App\Core\BaseMatch;
 
 class GameMatch implements BaseMatch
@@ -18,7 +19,7 @@ class GameMatch implements BaseMatch
     public function start($players)
     {
         $this->playerOne = array_shift($players);
-        $this->playerTWo = array_shift($players);
+        $this->playerTwo = array_shift($players);
     }
 
     public function terminate()

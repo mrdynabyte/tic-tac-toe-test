@@ -125,7 +125,7 @@ class TicTacToe extends Command
 
         if ($playerOne != null && $playerTwo != null) {
             $match = new GameMatch();
-            $match->start([$playerTwo, $playerTwo]);
+            $match->start([$playerOne, $playerTwo]);
         }
 
         $this->showMenu();
