@@ -19,5 +19,7 @@ class TicTacToeSeeder extends Seeder
             'description' => 'A funny TicTacToe Game',
             'rules' => 'Match three Xs or Os in a row in any direction and you win!'
         ]);
+
+        $game->save();
     }
 }
