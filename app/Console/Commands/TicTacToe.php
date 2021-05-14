@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Games\TicTacToe\Match;
+use App\Games\TicTacToe\Player;
 use Illuminate\Console\Command;
 
 class TicTacToe extends Command
@@ -26,9 +27,11 @@ class TicTacToe extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Player $players)
     {
         parent::__construct();
+
+        $this->players = $players;
     }
 
     /**
@@ -38,6 +41,7 @@ class TicTacToe extends Command
      */
     public function handle()
     {
+
         $this->info(base64_decode(getenv('GAME_HEADLINE')));
         $this->showMenu();
     }
@@ -61,7 +65,7 @@ class TicTacToe extends Command
     {
         switch ($choice) {
             case 1:
-                break;
+                $this->createPlayer();
             case 2:
                 break;
             case 3:
@@ -75,5 +79,18 @@ class TicTacToe extends Command
                 $this->showMenu();
                 break;
         }
+    }
+
+    protected function createPlayer()
+    {
+        $this->info('Please input the details: ');
+
+        $nickname = $this->ask('Username: ');
+        $email = $this->ask('Email: ');
+
+        return $this->players->create([
+            'nickname' => $nickname,
+            'email' => $email,
+        ]);
     }
 }
