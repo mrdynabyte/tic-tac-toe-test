@@ -2,6 +2,7 @@
 
 namespace App\Games\TicTacToe;
 
+use Exception;
 use App\Core\BasePlayer;
 use App\Models\Player as TTTPlayer;
 
@@ -17,8 +18,11 @@ class Player implements BasePlayer
 
     public function delete($nickname = '')
     {
-        $player = TTTPlayer::where(['nickname' => $nickname])->first();
+        if (empty($nickname)) {
+            throw new Exception('Nickname cannot be empty');
+        }
 
+        $player = TTTPlayer::where(['nickname' => $nickname])->first();
         return $player->delete();
     }
 

@@ -103,8 +103,8 @@ class TicTacToe extends Command
     protected function deletePlayer()
     {
         $this->info('Please input the details: ');
-        $nickname = $this->ask('Username');
 
+        $nickname = $this->ask('Username');
 
         try {
             $this->players->delete($nickname);
