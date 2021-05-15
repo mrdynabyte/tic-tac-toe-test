@@ -117,15 +117,23 @@ class TicTacToe extends Command
 
     protected function startMatch()
     {
-        $playerOne = $this->ask('Who\'s Player 1');
-        $playerTwo = $this->ask('Who\'s Player 2');
+        $playerOneNickname = $this->ask('Who\'s Player 1');
+        $playerTwoNickname = $this->ask('Who\'s Player 2');
 
-        $playerOne = $this->players->findPlayer($playerOne);
-        $playerTwo = $this->players->findPlayer($playerTwo);
+        $playerOne = $this->players->findPlayer($playerOneNickname);
+        $playerTwo = $this->players->findPlayer($playerTwoNickname);
 
         if ($playerOne != null && $playerTwo != null) {
             $match = new GameMatch();
             $match->start([$playerOne, $playerTwo]);
+        }
+
+        if ($playerOne == null) {
+            $this->info('Player ' . $playerOneNickname . ' does not exist');
+        }
+
+        if ($playerTwo == null) {
+            $this->info('Player ' . $playerTwoNickname . ' does not exist');
         }
 
         $this->showMenu();
