@@ -2,6 +2,7 @@
 
 namespace App\Games\TicTacToe;
 
+use Session;
 use Exception;
 use App\Core\BasePlayer;
 use App\Models\Player as TTTPlayer;
@@ -11,7 +12,7 @@ class Player implements BasePlayer
     public function create($playerData = [])
     {
         $player = new TTTPlayer($playerData);
-        $player->save();
+        Session::put($player->nickname, $player);
 
         return $player;
     }
@@ -22,8 +23,7 @@ class Player implements BasePlayer
             throw new Exception('Nickname cannot be empty');
         }
 
-        $player = TTTPlayer::where(['nickname' => $nickname])->first();
-        return $player->delete();
+        return Session::remove($nickname);
     }
 
     public function update($playerData = [])
@@ -33,6 +33,6 @@ class Player implements BasePlayer
 
     public function findPlayer($nickname)
     {
-        return TTTPlayer::where(['nickname' => $nickname])->first();
+        return Session::get($nickname);
     }
 }

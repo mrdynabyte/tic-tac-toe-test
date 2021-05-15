@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Session;
 use App\Games\TicTacToe\Player;
 use Illuminate\Console\Command;
 use App\Games\TicTacToe\GameMatch;
@@ -41,6 +42,7 @@ class TicTacToe extends Command
      */
     public function handle()
     {
+        Session::start();
 
         $this->info(base64_decode(getenv('GAME_HEADLINE')));
         $this->showMenu();
@@ -124,7 +126,7 @@ class TicTacToe extends Command
         $playerTwo = $this->players->findPlayer($playerTwoNickname);
 
         if ($playerOne != null && $playerTwo != null) {
-            $match = new GameMatch();
+            $match = new GameMatch($this);
             $match->start([$playerOne, $playerTwo]);
         }
 

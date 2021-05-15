@@ -4,6 +4,7 @@ namespace App\Games\TicTacToe;
 
 use App\Models\Player;
 use App\Core\BaseMatch;
+use Illuminate\Console\Command;
 
 class GameMatch implements BaseMatch
 {
