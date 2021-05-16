@@ -33,8 +33,15 @@ class Game implements BaseGame
 
     public function getAttributes()
     {
-        return [
-            'board' => $this->board
-        ];
+        return $this->board;
+    }
+
+    public function setAttributes($attrs)
+    {
+    }
+
+    public function render()
+    {
+        return json_encode($this->board);
     }
 }

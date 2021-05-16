@@ -68,14 +68,16 @@ class TicTacToe extends Command
         switch ($choice) {
             case 1:
                 $this->createPlayer();
+                break;
             case 2:
                 $this->deletePlayer();
+                break;
             case 3:
                 $this->startMatch();
+                break;
             case 4:
                 break;
             case 5:
-                return;
                 break;
             default:
                 $this->showMenu();
@@ -119,25 +121,26 @@ class TicTacToe extends Command
 
     protected function startMatch()
     {
+        [$playerOne, $playerTwo] = $this->requireForPlayers();
+
+        if ($playerOne != null && $playerTwo != null) {
+            $match = new GameMatch($this);
+            $match->start([$playerOne, $playerTwo]);
+        } else {
+            $this->error('You need to provide an existing nickname');
+        }
+
+        return;
+    }
+
+    private function requireForPlayers()
+    {
         $playerOneNickname = $this->ask('Who\'s Player 1');
         $playerTwoNickname = $this->ask('Who\'s Player 2');
 
         $playerOne = $this->players->findPlayer($playerOneNickname);
         $playerTwo = $this->players->findPlayer($playerTwoNickname);
 
-        if ($playerOne != null && $playerTwo != null) {
-            $match = new GameMatch();
-            $match->start([$playerOne, $playerTwo]);
-        }
-
-        if ($playerOne == null) {
-            $this->info('Player ' . $playerOneNickname . ' does not exist');
-        }
-
-        if ($playerTwo == null) {
-            $this->info('Player ' . $playerTwoNickname . ' does not exist');
-        }
-
-        $this->showMenu();
+        return [$playerOne, $playerTwo];
     }
 }

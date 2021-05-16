@@ -11,4 +11,6 @@ interface BaseMatch
     public function getLosers();
     public function getScore();
     public function performActionForPlayer();
+
+    public function setExecutionContext($context);
 }
