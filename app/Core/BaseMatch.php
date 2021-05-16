@@ -10,7 +10,7 @@ interface BaseMatch
     public function getWinner();
     public function getLosers();
     public function getScore();
-    public function performActionForPlayer();
+    public function playNextTurn();
 
     public function setExecutionContext($context);
 }

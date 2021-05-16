@@ -28,11 +28,12 @@ class TicTacToe extends Command
      *
      * @return void
      */
-    public function __construct(Player $players)
+    public function __construct(Player $players, GameMatch $matches)
     {
         parent::__construct();
 
         $this->players = $players;
+        $this->matches = $matches;
     }
 
     /**
@@ -124,13 +125,22 @@ class TicTacToe extends Command
         [$playerOne, $playerTwo] = $this->requireForPlayers();
 
         if ($playerOne != null && $playerTwo != null) {
-            $match = new GameMatch($this);
+            $match = $this->matches->create($this);
             $match->start([$playerOne, $playerTwo]);
+
+            $this->triggerMatchTurns($match);
         } else {
             $this->error('You need to provide an existing nickname');
         }
 
         return;
+    }
+
+    private function triggerMatchTurns($match)
+    {
+        while ($match->isActive()) {
+            $match->playNextTurn();
+        }
     }
 
     private function requireForPlayers()

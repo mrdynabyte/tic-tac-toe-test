@@ -22,13 +22,19 @@ class Game implements BaseGame
     public function bootstrap()
     {
         $this->board = array_fill(0, 3, []);
-        $this->board[0] =  array_fill(0, 3, 0);
-        $this->board[1] =  array_fill(0, 3, 0);
-        $this->board[2] =  array_fill(0, 3, 0);
+        $this->board[0] =  array_fill(0, 3, '-');
+        $this->board[1] =  array_fill(0, 3, '-');
+        $this->board[2] =  array_fill(0, 3, '-');
     }
 
     public function validate($args = [])
     {
+        return true;
+    }
+
+    public function isFinished()
+    {
+        return $this->validate();
     }
 
     public function getAttributes()

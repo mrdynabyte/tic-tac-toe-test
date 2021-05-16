@@ -16,12 +16,18 @@ class GameMatch implements BaseMatch
     private Player $playerOne;
     private Player $playerTwo;
 
-    public function __construct(Command $context = null)
+    public function __construct()
+    {
+    }
+
+    public function create(Command $context = null)
     {
         $this->game = new Game();
         $this->match = new GMatch();
 
         $this->setExecutionContext($context);
+
+        return $this;
     }
 
     public function start($players)
@@ -36,8 +42,7 @@ class GameMatch implements BaseMatch
         $this->id = $this->match->id;
 
         Session::put($this->id . $this->match);
-
-        $this->showBoard();
+        Session::put('next-turn', 0);
     }
 
     public function terminate()
@@ -61,14 +66,33 @@ class GameMatch implements BaseMatch
     {
     }
 
-    public function performActionForPlayer()
+    public function playNextTurn()
     {
-        $this->context->ask('');
+        $nextTurn = Session::get('next-turn');
+
+        $this->context->info('You need to specify coordinates with : Example: 0-0');
+        $this->showBoard();
+
+        switch ($nextTurn) {
+            case 0:
+                $this->context->ask($this->playerOne->nickname . '\'s turn. Make your move');
+                break;
+            case 1:
+                $this->context->ask($this->playerTwo->nickname . '\'s turn. Make your move');
+                break;
+        }
+
+        Session::put('next-turn', (int) !$nextTurn); //handled with boolean but saved as int
     }
 
     public function setExecutionContext($context)
     {
         $this->context = $context;
+    }
+
+    public function isActive()
+    {
+        return $this->game->isFinished();
     }
 
     protected function showBoard()
