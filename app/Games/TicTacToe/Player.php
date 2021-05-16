@@ -2,16 +2,21 @@
 
 namespace App\Games\TicTacToe;
 
-use Session;
 use Exception;
 use App\Core\BasePlayer;
 use App\Models\Player as TTTPlayer;
+use Illuminate\Support\Facades\Session;
 
 class Player implements BasePlayer
 {
     public function create($playerData = [])
     {
+        if ($playerData['nickname'] == '') {
+            throw new Exception('You need to provide a nickname');
+        }
+
         $player = new TTTPlayer($playerData);
+
         Session::put($player->nickname, $player);
 
         return $player;
@@ -20,7 +25,7 @@ class Player implements BasePlayer
     public function delete($nickname = '')
     {
         if (empty($nickname)) {
-            throw new Exception('Nickname cannot be empty');
+            throw new Exception('You need to provide a nickname');
         }
 
         return Session::remove($nickname);

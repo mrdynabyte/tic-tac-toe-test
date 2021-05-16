@@ -3,7 +3,7 @@
 namespace App\Games\TicTacToe;
 
 use App\Core\BaseGame;
-use App\Games\TicTacToe\Player;
+use Illuminate\Support\Facades\Session;
 
 class Game implements BaseGame
 {
@@ -12,6 +12,7 @@ class Game implements BaseGame
     public function __construct()
     {
         $this->bootstrap();
+        Session::put('ttt-board-' . substr(str_shuffle(MD5(microtime())), 0, 10));
     }
 
     public function init()

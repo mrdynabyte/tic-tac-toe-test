@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Session;
 use App\Games\TicTacToe\Player;
 use Illuminate\Console\Command;
 use App\Games\TicTacToe\GameMatch;
+use Illuminate\Support\Facades\Session;
 
 class TicTacToe extends Command
 {
@@ -126,7 +126,7 @@ class TicTacToe extends Command
         $playerTwo = $this->players->findPlayer($playerTwoNickname);
 
         if ($playerOne != null && $playerTwo != null) {
-            $match = new GameMatch($this);
+            $match = new GameMatch();
             $match->start([$playerOne, $playerTwo]);
         }
 
