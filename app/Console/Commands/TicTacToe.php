@@ -141,6 +141,8 @@ class TicTacToe extends Command
         while ($match->isActive()) {
             $match->playNextTurn();
         }
+
+        $this->showMenu();
     }
 
     private function requireForPlayers()

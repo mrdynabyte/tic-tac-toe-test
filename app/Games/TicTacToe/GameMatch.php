@@ -102,6 +102,12 @@ class GameMatch implements BaseMatch
             'player' => $nextTurn
         ];
 
+        if (($attrs['x'] < 0 || $attrs['x'] > 2) || $attrs['y'] < 0 || $attrs['y'] > 2) {
+            $this->context->error('Invalid move. You lost your turn');
+
+            return;
+        }
+
         $this->game->updateBoard($attrs);
     }
 

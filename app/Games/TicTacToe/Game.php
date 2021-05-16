@@ -17,6 +17,7 @@ class Game implements BaseGame
 
     public function init()
     {
+        // TODO: Not actually needed. Its there just for logic separation in the future
     }
 
     public function bootstrap()
