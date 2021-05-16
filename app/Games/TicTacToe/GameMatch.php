@@ -75,12 +75,14 @@ class GameMatch implements BaseMatch
 
         switch ($nextTurn) {
             case 0:
-                $this->context->ask($this->playerOne->nickname . '\'s turn. Make your move');
+                $move = $this->context->ask($this->playerOne->nickname . '\'s turn. Make your move');
                 break;
             case 1:
-                $this->context->ask($this->playerTwo->nickname . '\'s turn. Make your move');
+                $move = $this->context->ask($this->playerTwo->nickname . '\'s turn. Make your move');
                 break;
         }
+
+        $this->handleMove($move, $nextTurn);
 
         Session::put('next-turn', (int) !$nextTurn); //handled with boolean but saved as int
     }
@@ -88,6 +90,19 @@ class GameMatch implements BaseMatch
     public function setExecutionContext($context)
     {
         $this->context = $context;
+    }
+
+    public function handleMove($move, $nextTurn = 0)
+    {
+        $coords = explode('-', $move);
+
+        $attrs = [
+            'x' => array_shift($coords),
+            'y' => array_shift($coords),
+            'player' => $nextTurn
+        ];
+
+        $this->game->updateBoard($attrs);
     }
 
     public function isActive()

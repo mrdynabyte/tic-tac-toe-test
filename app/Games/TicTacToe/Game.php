@@ -44,10 +44,16 @@ class Game implements BaseGame
 
     public function setAttributes($attrs)
     {
+        $this->board[$attrs['x']][$attrs['y']] = $attrs['player'] == 0 ? 'X' : 'O';
     }
 
     public function render()
     {
         return json_encode($this->board);
+    }
+
+    public function updateBoard($attrs)
+    {
+        $this->setAttributes($attrs);
     }
 }
