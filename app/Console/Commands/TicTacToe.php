@@ -134,7 +134,7 @@ class TicTacToe extends Command
             $this->error('You need to provide an existing nickname');
         }
 
-        return;
+        $this->showMenu();
     }
 
     protected function showLastMatchResults()

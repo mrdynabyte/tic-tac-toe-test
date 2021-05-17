@@ -52,6 +52,11 @@ class Game implements BaseGame
         return $isThereAWinner;
     }
 
+    public function setBoard($board)
+    {
+        $this->board = $board;
+    }
+
     public function isThereAWinner()
     {
         return Session::get('ttt-is-there-a-winner');

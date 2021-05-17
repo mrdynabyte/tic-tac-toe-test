@@ -31,6 +31,11 @@ class GameMatch implements BaseMatch
         return $this;
     }
 
+    public function getMatchId()
+    {
+        return $this->match->id;
+    }
+
     public function start($players)
     {
         $this->playerOne = array_shift($players);
@@ -42,7 +47,7 @@ class GameMatch implements BaseMatch
 
         $this->id = $this->match->id;
 
-        Session::put($this->id . $this->match);
+        Session::put($this->id, $this->match);
         Session::put('next-turn', 0);
     }
 
