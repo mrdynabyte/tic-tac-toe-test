@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Session;
 
 class Game implements BaseGame
 {
+    const LENGTH = 3;
+
     private $board;
 
     public function __construct()
@@ -30,7 +32,19 @@ class Game implements BaseGame
 
     public function validate($args = [])
     {
-        return true;
+        if (!isset($args['player'])) {
+            return false;
+        }
+
+        $player = $args['player'] == 0 ? 'X' : 'O';
+
+        $hScore = $this->validateHorizontal($player, $args['x']);
+        $vScore = $this->validateVertical($player, $args['y']);
+        $dScore = $this->validateDiagonal($player);
+        $dScore = $this->validateDiagonal($player);
+        $dRScore = $this->validateReverseDiagonal($player);
+
+        return ($hScore == self::LENGTH || $vScore == self::LENGTH || $dScore == self::LENGTH || $dRScore == self::LENGTH);
     }
 
     public function isFinished()
@@ -56,5 +70,63 @@ class Game implements BaseGame
     public function updateBoard($attrs)
     {
         $this->setAttributes($attrs);
+    }
+
+    protected function validateHorizontal($player, $row)
+    {
+        $score = 0;
+
+        for ($i = 0; $i < self::LENGTH; $i++) {
+            if ($this->board[$row][$i] == $player) {
+                $score++;
+            }
+        }
+
+        return $score;
+    }
+
+    protected function validateVertical($player, $column)
+    {
+        $score = 0;
+
+        for ($i = 0; $i < self::LENGTH; $i++) {
+            if ($this->board[$i][$column] == $player) {
+                $score++;
+            }
+        }
+
+        return $score;
+    }
+
+    protected function validateDiagonal($player)
+    {
+        $score = 0;
+
+        for ($i = 0; $i < self::LENGTH; $i++) {
+            if ($this->board[$i][$i] == $player) {
+                $score++;
+            }
+        }
+
+        return $score;
+    }
+
+    protected function validateReverseDiagonal($player)
+    {
+        $score = 0;
+
+        if ($this->board[0][2] == $player) {
+            $score++;
+        }
+
+        if ($this->board[1][1] == $player) {
+            $score++;
+        }
+
+        if ($this->board[2][0] == $player) {
+            $score++;
+        }
+
+        return $score;
     }
 }

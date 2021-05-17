@@ -70,7 +70,7 @@ class GameMatch implements BaseMatch
     {
         $nextTurn = Session::get('next-turn');
 
-        $this->context->info('You need to specify coordinates with : Example: 0-0');
+        $this->context->comment('You need to specify coordinates with : Example: 0-0');
         $this->showBoard();
 
         switch ($nextTurn) {
@@ -104,16 +104,17 @@ class GameMatch implements BaseMatch
 
         if (($attrs['x'] < 0 || $attrs['x'] > 2) || $attrs['y'] < 0 || $attrs['y'] > 2) {
             $this->context->error('Invalid move. You lost your turn');
-
             return;
         }
 
         $this->game->updateBoard($attrs);
+
+        $this->game->validate($attrs);
     }
 
     public function isActive()
     {
-        return $this->game->isFinished();
+        return !$this->game->isFinished();
     }
 
     protected function showBoard()
@@ -124,5 +125,9 @@ class GameMatch implements BaseMatch
         }
 
         return $this->game->render();
+    }
+
+    protected function handleVictory()
+    {
     }
 }
