@@ -131,6 +131,11 @@ class GameMatch implements BaseMatch
         $this->game->validate($attrs);
     }
 
+    public function getGameInstance()
+    {
+        return $this->game;
+    }
+
     public function getBoard()
     {
         return $this->game->getAttributes();

@@ -37,4 +37,24 @@ class GameTest extends TestCase
         $this->assertEquals(0, Session::get('next-turn'));
         $this->assertTrue(Session::get($match->getMatchId()) instanceof GMatch);
     }
+
+    public function test_it_properly_validates_a_victory()
+    {
+        $sampleBoard = [
+            ['-', '-', '-'],
+            ['-', 'X', '-'],
+            ['-', '-', 'X'],
+        ];
+
+        $rick = new Player(['nickname' => 'Rick', 'email' => 'undisclosed@c-132.com']);
+        $morty = new Player(['nickname' => 'Morty', 'email' => 'therealmorty@c-132.com']);
+
+        $match = new GameMatch();
+        $match->create()->start([$rick, $morty]);
+        $match->getGameInstance()->setBoard($sampleBoard);
+        $match->handleMove('0-0');
+
+        $this->assertTrue(Session::get('ttt-is-there-a-winner'));
+        $this->assertEquals(0, Session::get('ttt-winner'));
+    }
 }
