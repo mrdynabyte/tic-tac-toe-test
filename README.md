@@ -20,7 +20,11 @@ Such Laravel Command is holded on the `App/Commands/TicTacToe.php` and takes adv
 
 ## Test Files.
 
-Tests are located under `tests/` folder.
+Tests are located under `tests/` folder. Invoke them by using:
+
+```
+php artisan test
+```
 
 ## Progress commits.
 
@@ -39,6 +43,17 @@ Database should be created right away by running `./vendor/bin/sail up`. After t
 ## .ENV File **_ REQUIRED _**
 
 Please copy the `.env.example` file into the root folder `tic-tac-toe` as the `.env` file. The example file holds a variable that is needed for the game to run.
+
+# Installation
+
+You need to run the following commands in order to get the game running:
+
+```
+- git https://github.com/mrdynabyte/tic-tac-toe-test.git.
+- cd tic-tac-toe-test
+- composer install
+- php artisan tic-tac-toe:start
+```
 
 ## Game run
 
