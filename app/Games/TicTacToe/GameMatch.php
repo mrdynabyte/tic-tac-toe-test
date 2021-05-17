@@ -47,6 +47,8 @@ class GameMatch implements BaseMatch
 
     public function terminate()
     {
+        $this->context->error(' ===== MATCH FINISHED ===== ');
+        $this->context->comment('The winner is: ' . $this->getWinner());
     }
 
     public function getPlayers()
@@ -56,6 +58,7 @@ class GameMatch implements BaseMatch
 
     public function getWinner()
     {
+        return Session::get('ttt-winner') == 0 ? $this->playerOne->nickname : $this->playerTwo->nickname;
     }
 
     public function getLosers()
@@ -84,7 +87,7 @@ class GameMatch implements BaseMatch
 
         $this->handleMove($move, $nextTurn);
 
-        Session::put('next-turn', (int) !$nextTurn); //handled with boolean but saved as int
+        Session::put('next-turn', (int) !$nextTurn); //handled as boolean but saved as int
     }
 
     public function setExecutionContext($context)
@@ -114,7 +117,7 @@ class GameMatch implements BaseMatch
 
     public function isActive()
     {
-        return !$this->game->isFinished();
+        return !$this->game->isThereAWinner();
     }
 
     protected function showBoard()
@@ -125,9 +128,5 @@ class GameMatch implements BaseMatch
         }
 
         return $this->game->render();
-    }
-
-    protected function handleVictory()
-    {
     }
 }

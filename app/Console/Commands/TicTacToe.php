@@ -128,7 +128,7 @@ class TicTacToe extends Command
             $match = $this->matches->create($this);
             $match->start([$playerOne, $playerTwo]);
 
-            $this->triggerMatchTurns($match);
+            $this->triggerMatch($match);
         } else {
             $this->error('You need to provide an existing nickname');
         }
@@ -136,11 +136,13 @@ class TicTacToe extends Command
         return;
     }
 
-    private function triggerMatchTurns($match)
+    private function triggerMatch($match)
     {
         while ($match->isActive()) {
             $match->playNextTurn();
         }
+
+        $match->terminate();
 
         $this->showMenu();
     }

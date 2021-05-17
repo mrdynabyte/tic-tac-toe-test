@@ -15,6 +15,7 @@ class Game implements BaseGame
     {
         $this->bootstrap();
         Session::put('ttt-board-' . substr(str_shuffle(MD5(microtime())), 0, 10));
+        Session::put('ttt-is-there-a-winner', false);
     }
 
     public function init()
@@ -32,10 +33,6 @@ class Game implements BaseGame
 
     public function validate($args = [])
     {
-        if (!isset($args['player'])) {
-            return false;
-        }
-
         $player = $args['player'] == 0 ? 'X' : 'O';
 
         $hScore = $this->validateHorizontal($player, $args['x']);
@@ -44,12 +41,19 @@ class Game implements BaseGame
         $dScore = $this->validateDiagonal($player);
         $dRScore = $this->validateReverseDiagonal($player);
 
-        return ($hScore == self::LENGTH || $vScore == self::LENGTH || $dScore == self::LENGTH || $dRScore == self::LENGTH);
+        $isThereAWinner = ($hScore == self::LENGTH || $vScore == self::LENGTH || $dScore == self::LENGTH || $dRScore == self::LENGTH);
+
+        if ($isThereAWinner) {
+            Session::put('ttt-is-there-a-winner', $isThereAWinner);
+            Session::put('ttt-winner', $args['player']);
+        }
+
+        return $isThereAWinner;
     }
 
-    public function isFinished()
+    public function isThereAWinner()
     {
-        return $this->validate();
+        return Session::get('ttt-is-there-a-winner');
     }
 
     public function getAttributes()
