@@ -46,6 +46,7 @@ class Game implements BaseGame
         if ($isThereAWinner) {
             Session::put('ttt-is-there-a-winner', $isThereAWinner);
             Session::put('ttt-winner', $args['player']);
+            Session::put('ttt-winner-board', $this->board);
         }
 
         return $isThereAWinner;

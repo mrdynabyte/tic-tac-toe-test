@@ -77,6 +77,7 @@ class TicTacToe extends Command
                 $this->startMatch();
                 break;
             case 4:
+                $this->showLastMatchResults();
                 break;
             case 5:
                 break;
@@ -134,6 +135,22 @@ class TicTacToe extends Command
         }
 
         return;
+    }
+
+    protected function showLastMatchResults()
+    {
+        $lastMatch = $this->matches->getLastMatchResults();
+
+        if ($lastMatch == null) {
+            $this->error(' No matches have taken place yet :(');
+            $this->showMenu();
+        }
+
+        $this->comment(' ==== Last match results ===');
+        $this->table([], $lastMatch->getBoard());
+        $this->info('The winner was: ' . $lastMatch->getWinner()->nickname);
+
+        $this->showMenu();
     }
 
     private function triggerMatch($match)
